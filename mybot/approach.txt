@@ -1,0 +1,9 @@
+try a couple of different approaches:
+
+1. match the corners of the job pane and save the contents of what is inside as .png
+
+2. syntehsize a bunch of job panes
+  a. so just naively synthesize the text and job panes
+  b. try to inspect the job pane markup to get exact dimensions
+
+

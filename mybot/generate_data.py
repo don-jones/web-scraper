@@ -33,22 +33,37 @@ def generate_random_paragraphs(lines=1, width=80):
     return "\n".join(output_lines)
 
 def main():
-    fig = plt.figure(figsize=(20,10))
+    fig = plt.figure(figsize=(10, 4))
 
-    axis_job_title = fig.add_axes([0.1,0.7,0.8,0.1])
-    axis_job_description = fig.add_axes([0.1,0.3,0.8,0.3])
-    axis_bkgd = fig.add_axes([0.1,0.1,0.8,0.8])
+    axis_bkgd = fig.add_axes([0.1, 0.1, 0.8, 0.8])
+
+    axis_title = fig.add_axes([0.1, 0.7, 0.4, 0.1])
+    axis_title.patch.set_alpha(0.0)
+    axis_title.axis('off')
     text_1 = generate_random_paragraphs(lines=1, width=40)
-    text_2 = generate_random_paragraphs(lines=10, width=80)
+    axis_title.text(x=0, y=0, s=text_1, fontsize=18)
 
-    axis_job_title.text(x=0, y=0, s=text_1, fontsize=20)
-    axis_job_description.text(x=0, y=0, s=text_2, fontsize=12)
 
-    axis_job_title.axis('off')
-    axis_job_description.axis('off')
-    axis_bkgd.axis('off')
+
+
+    axis_2 = fig.add_axes([0.1, 0.3, 0.4, 0.2])
+
+    # 3. Make the foreground axes completely transparent so the image shows through
+    axis_2.patch.set_alpha(0.0)
+
+    # Optional: Hide the axes spines/ticks so only the text is visible over the image
+    axis_2.axis('off')
+    axis_bkgd.axis('off')                       # Hide the background axis frame lines
+
+    # Populate your text
+    text_2 = generate_random_paragraphs(lines=3, width=80)
+
+    axis_2.text(x=0, y=0, s=text_2, fontsize=12)
+
+    # Populate your background
     bkgd_img = plt.imread('job_pane_generic.png')
-    axis_bkgd.imshow(bkgd_img, zorder=10)
+    axis_bkgd.imshow(bkgd_img, aspect='auto')  # aspect='auto' matches the image to your 0.8x0.8 box dimensions
+
     plt.show()
 
 if __name__ == '__main__':
