@@ -1,37 +1,8 @@
 import matplotlib.pyplot as plt
+from generate_data import BoundingBox, TextBlock, MetaBadge, SkillChip, JobPane 
 import textwrap
 
 from typing import TypedDict, List
-
-class BoundingBox(TypedDict):
-    upper: float
-    lower: float
-
-class TextBlock(TypedDict):
-    text: str
-    bounding_box: BoundingBox
-    fontsize: int
-    width: int
-
-class MetaBadge(TypedDict):
-    label: str
-    bounding_box: BoundingBox
-    fontsize: int
-    width: int
-
-class SkillChip(TypedDict):
-    name: str
-    bounding_box: BoundingBox
-    width: int
-
-class JobPane(TypedDict):
-    top_badge: MetaBadge       # e.g., "Posted yesterday • Proposals: 5 to 10"
-    title: TextBlock           # e.g., "Electric Engineer in New York"
-    job_specs: TextBlock       # e.g., "Fixed-price: $5,000 | Intermediate | ..."
-    location_req: TextBlock    # e.g., "Only freelancers located in the United States..."
-    description: TextBlock     # Core job text paragraphs
-    skills_list: List[SkillChip] # Tag layout chips
-    footer_stats: MetaBadge    # e.g., "Actively recruiting • Payment verified..."
 
 def normalize_y(y: float, offset_bot: float, offset_top: float) -> float:
     """Scales visual element coordinates cleanly within the viewport."""
