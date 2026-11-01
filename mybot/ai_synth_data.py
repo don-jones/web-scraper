@@ -47,12 +47,15 @@ def generate_upwork_pane_offsets() -> JobPane:
             "fontsize": 12,
             "width": 95
         },
+        """
         "skills_list": [
             {"name": "Electrical Engineering", "bounding_box": {"upper": 4.10, "lower": 4.50}, "width": 18},
             {"name": "CAD", "bounding_box": {"upper": 4.10, "lower": 4.50}, "width": 6},
             {"name": "Mechanical Engineering", "bounding_box": {"upper": 4.10, "lower": 4.50}, "width": 19},
             {"name": "Civil Engineering", "bounding_box": {"upper": 4.10, "lower": 4.50}, "width": 15}
         ],
+        """
+        "skills_list" : [],
         "footer_stats": {
             "label": "Actively recruiting   •   Payment verified   •   4.7   •   United States",
             "bounding_box": {"upper": 4.90, "lower": 5.20},
