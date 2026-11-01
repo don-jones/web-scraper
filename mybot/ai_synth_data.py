@@ -24,7 +24,7 @@ def generate_upwork_pane_offsets() -> JobPane:
             "width": 35
         },
         "title": {
-            "text": generate_random_paragraphs(lines=1, width=random.randint(20,50)),
+            "text": "Electrical Engineer in New York", 
             "bounding_box": {"upper": 1.15, "lower": 1.45},
             "fontsize": 18,
             "width": 50
