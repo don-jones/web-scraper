@@ -5,7 +5,7 @@ import random
 def generate_skills_list():
     skillchip_fontsize = 12
     num_skillchips = random.randint(1,10)
-
+    num_skillchips = 3
     skills_list = []
 
     for i in range(num_skillchips):
@@ -15,7 +15,7 @@ def generate_skills_list():
 
         skillchip_text_width = estimate_text_size(skillchip_name,
                                                   skillchip_fontsize,
-                                                  100)[0] 
+                                                  20)[0] 
 
         skillchip_bbox = {"upper" : 4.10, "lower" : 4.50}
 

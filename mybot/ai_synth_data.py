@@ -140,24 +140,31 @@ def draw_job_card():
     )
     
     # 6. Categorical Horizontal Skill Chips
-    current_x = 2
+    current_x = 3
     for chip in pane_data["skills_list"]:
         y_pos = chip["bounding_box"]["lower"]
-        padding = 0.8
+        padding = 0.5
         # Draw background patch label container
         textbox = ax.text(
                   x=current_x, y=y_pos, s=chip["name"], 
                   fontsize=chip['fontsize'], color="#1e293b", weight="bold",
-                  bbox=dict(boxstyle=f"round,pad={padding}", fc="#f1f5f9", ec="none")
+                  bbox=dict(boxstyle=f"round,pad={padding}", fc="#f1f5f9", ec="black")
         )
+        fig.canvas.draw()
         renderer = fig.canvas.get_renderer()
-        bbox_pixels = textbox.get_window_extent(renderer)
-        bbox_inches = bbox_pixels.transformed(fig.dpi_scale_trans.inverted())
-        bbox_width = bbox_inches.width
-        # Advance layout pointer contextually via targeted width
-        #current_x += chip["width"] + 1.5
-        current_x += 15 
         
+        # 1. Get the bounding box in pixels
+        bbox_pixels = textbox.get_window_extent(renderer)
+        
+        # 2. Transform the pixel coordinates back into data coordinates
+        bbox_data = bbox_pixels.transformed(ax.transData.inverted())
+        
+        # 3. Calculate width in data units
+        width_data = bbox_data.x1 - bbox_data.x0
+        
+        # 4. Safely increment your data coordinate X
+        #current_x += width_data 
+
     # 7. Verification Footer Row Data
     footer = pane_data["footer_stats"]
     ax.text(
