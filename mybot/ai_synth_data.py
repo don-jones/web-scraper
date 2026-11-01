@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from generate_skillchips import generate_skills_list
 from generate_data import BoundingBox, TextBlock, MetaBadge, SkillChip, JobPane 
 from generate_data import generate_random_paragraphs
 import textwrap
@@ -24,7 +23,7 @@ def generate_upwork_pane_offsets() -> JobPane:
             "width": 35
         },
         "title": {
-            "text": "Electrical Engineer in New York", 
+            "text": generate_random_paragraphs(lines=1, width=random.randint(20,50)),
             "bounding_box": {"upper": 1.15, "lower": 1.45},
             "fontsize": 18,
             "width": 50
@@ -50,7 +49,12 @@ def generate_upwork_pane_offsets() -> JobPane:
             "fontsize": 12,
             "width": 95
         },
-        "skills_list" : generate_skills_list(),
+        "skills_list": [
+            {"name": "Electrical Engineering", "bounding_box": {"upper": 4.10, "lower": 4.50}, "width": 18},
+            {"name": "CAD", "bounding_box": {"upper": 4.10, "lower": 4.50}, "width": 6},
+            {"name": "Mechanical Engineering", "bounding_box": {"upper": 4.10, "lower": 4.50}, "width": 19},
+            {"name": "Civil Engineering", "bounding_box": {"upper": 4.10, "lower": 4.50}, "width": 15}
+        ],
         "footer_stats": {
             "label": "Actively recruiting   •   Payment verified   •   4.7   •   United States",
             "bounding_box": {"upper": 4.90, "lower": 5.20},
@@ -113,7 +117,8 @@ def draw_job_card():
     title = pane_data["title"]
     ax.text(
         x=2, y=title["bounding_box"]["lower"], s=title["text"], 
-        fontsize=title["fontsize"], color="#0f172a", weight="bold"
+        fontsize=title["fontsize"], color="#0f172a", weight="bold",
+        wrap=True
     )
     
     # 3. Contextual Job Specifications
@@ -126,7 +131,7 @@ def draw_job_card():
     # 4. Mandatory Geo Location Constraint
     loc = pane_data["location_req"]
     ax.text(
-        x=2, y=loc["bounding_box"]["lower"], s=f" {loc['text']}", 
+        x=2, y=loc["bounding_box"]["lower"], s=f"📍 {loc['text']}", 
         fontsize=loc["fontsize"], color="#475569", weight="medium"
     )
     
@@ -142,31 +147,19 @@ def draw_job_card():
     )
     
     # 6. Categorical Horizontal Skill Chips
-    current_x = 3
+    current_x = 2
     for chip in pane_data["skills_list"]:
         y_pos = chip["bounding_box"]["lower"]
-        padding = 0.5
+        
         # Draw background patch label container
-        textbox = ax.text(
-                  x=current_x, y=y_pos, s=chip["name"], 
-                  fontsize=chip['fontsize'], color="#1e293b", weight="bold",
-                  bbox=dict(boxstyle=f"round,pad={padding}", fc="#f1f5f9", ec="black")
+        ax.text(
+            x=current_x, y=y_pos, s=chip["name"], 
+            fontsize=10, color="#1e293b", weight="bold",
+            bbox=dict(boxstyle="round,pad=0.8", fc="#f1f5f9", ec="none")
         )
-        fig.canvas.draw()
-        renderer = fig.canvas.get_renderer()
+        # Advance layout pointer contextually via targeted width
+        current_x += chip["width"] + 1.5
         
-        # 1. Get the bounding box in pixels
-        bbox_pixels = textbox.get_window_extent(renderer)
-        
-        # 2. Transform the pixel coordinates back into data coordinates
-        bbox_data = bbox_pixels.transformed(ax.transData.inverted())
-        
-        # 3. Calculate width in data units
-        width_data = bbox_data.x1 - bbox_data.x0
-        
-        # 4. Safely increment your data coordinate X
-        #current_x += width_data 
-
     # 7. Verification Footer Row Data
     footer = pane_data["footer_stats"]
     ax.text(
@@ -183,4 +176,3 @@ def draw_job_card():
 if __name__ == "__main__":
     for i in range(3):
         draw_job_card()
-
