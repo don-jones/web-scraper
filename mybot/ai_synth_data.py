@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from generate_skillchips import generate_skills_list
 from generate_data import BoundingBox, TextBlock, MetaBadge, SkillChip, JobPane 
 import textwrap
 
@@ -47,15 +48,7 @@ def generate_upwork_pane_offsets() -> JobPane:
             "fontsize": 12,
             "width": 95
         },
-        """
-        "skills_list": [
-            {"name": "Electrical Engineering", "bounding_box": {"upper": 4.10, "lower": 4.50}, "width": 18},
-            {"name": "CAD", "bounding_box": {"upper": 4.10, "lower": 4.50}, "width": 6},
-            {"name": "Mechanical Engineering", "bounding_box": {"upper": 4.10, "lower": 4.50}, "width": 19},
-            {"name": "Civil Engineering", "bounding_box": {"upper": 4.10, "lower": 4.50}, "width": 15}
-        ],
-        """
-        "skills_list" : [],
+        "skills_list" : generate_skills_list(),
         "footer_stats": {
             "label": "Actively recruiting   •   Payment verified   •   4.7   •   United States",
             "bounding_box": {"upper": 4.90, "lower": 5.20},
@@ -131,7 +124,7 @@ def draw_job_card():
     # 4. Mandatory Geo Location Constraint
     loc = pane_data["location_req"]
     ax.text(
-        x=2, y=loc["bounding_box"]["lower"], s=f"📍 {loc['text']}", 
+        x=2, y=loc["bounding_box"]["lower"], s=f" {loc['text']}", 
         fontsize=loc["fontsize"], color="#475569", weight="medium"
     )
     
@@ -150,15 +143,20 @@ def draw_job_card():
     current_x = 2
     for chip in pane_data["skills_list"]:
         y_pos = chip["bounding_box"]["lower"]
-        
+        padding = 0.8
         # Draw background patch label container
-        ax.text(
-            x=current_x, y=y_pos, s=chip["name"], 
-            fontsize=10, color="#1e293b", weight="bold",
-            bbox=dict(boxstyle="round,pad=0.8", fc="#f1f5f9", ec="none")
+        textbox = ax.text(
+                  x=current_x, y=y_pos, s=chip["name"], 
+                  fontsize=chip['fontsize'], color="#1e293b", weight="bold",
+                  bbox=dict(boxstyle=f"round,pad={padding}", fc="#f1f5f9", ec="none")
         )
+        renderer = fig.canvas.get_renderer()
+        bbox_pixels = textbox.get_window_extent(renderer)
+        bbox_inches = bbox_pixels.transformed(fig.dpi_scale_trans.inverted())
+        bbox_width = bbox_inches.width
         # Advance layout pointer contextually via targeted width
-        current_x += chip["width"] + 1.5
+        #current_x += chip["width"] + 1.5
+        current_x += 15 
         
     # 7. Verification Footer Row Data
     footer = pane_data["footer_stats"]
@@ -174,5 +172,6 @@ def draw_job_card():
     plt.show()
 
 if __name__ == "__main__":
-    draw_job_card()
+    for i in range(3):
+        draw_job_card()
 
