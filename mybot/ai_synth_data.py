@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from generate_data import BoundingBox, TextBlock, MetaBadge, SkillChip, JobPane 
-from generate_data import generate_random_paragraphs
+from generate_data import generate_random_paragraphs, generate_top_badge_text
 import textwrap
 import random
 
@@ -15,12 +15,16 @@ def generate_upwork_pane_offsets() -> JobPane:
     offset_top = 0.5
     offset_bot = 5.5
 
+    top_badge_text_1, top_badge_text_2 = generate_top_badge_text()
+    ar_flag = False
+
     raw_data: JobPane = {
         "top_badge": {
-            "label": "Posted yesterday • Proposals: 5 to 10",
+            "label": f"{top_badge_text_1} • {top_badge_text_2}",
             "bounding_box": {"upper": 0.72, "lower": 0.95},
             "fontsize": 10,
-            "width": 35
+            "width": 35,
+            "actively_recruiting": ar_flag
         },
         "title": {
             "text": generate_random_paragraphs(lines=1, width=random.randint(20,50)),

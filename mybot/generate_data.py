@@ -1,6 +1,110 @@
 import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontProperties, findfont, get_font
 import random
 import string
+
+from typing import TypedDict, List
+
+class BoundingBox(TypedDict):
+    upper: float
+    lower: float
+
+class TextBlock(TypedDict):
+    text: str
+    bounding_box: BoundingBox
+    fontsize: int
+    width: int
+
+class MetaBadge(TypedDict):
+    label: str
+    bounding_box: BoundingBox
+    fontsize: int
+    width: int
+
+class SkillChip(TypedDict):
+    name: str
+    bounding_box: BoundingBox
+    width: int
+    fontsize: int
+    text_width: int
+
+class JobPane(TypedDict):
+    top_badge: MetaBadge       # e.g., "Posted yesterday • Proposals: 5 to 10"
+    title: TextBlock           # e.g., "Electric Engineer in New York"
+    job_specs: TextBlock       # e.g., "Fixed-price: $5,000 | Intermediate | ..."
+    location_req: TextBlock    # e.g., "Only freelancers located in the United States..."
+    description: TextBlock     # Core job text paragraphs
+    skills_list: List[SkillChip] # Tag layout chips
+    footer_stats: MetaBadge    # e.g., "Actively recruiting • Payment verified..."
+
+def estimate_text_size(text, fontsize, dpi=100):
+    """
+    Estimates the width and height of a string in pixels without rendering a canvas.
+    """
+    # 1. Grab font properties and locate the font file
+    props = FontProperties(size=fontsize)
+    font_path = findfont(props)
+    
+    # 2. Load the font using Matplotlib's internal FT2Font engine
+    font = get_font(font_path)
+    
+    # 3. Set the font size context (Matplotlib scales points to DPI internally)
+    font.set_size(fontsize, dpi)
+    
+    # 4. Load the text string into the engine to calculate dimensions
+    # 'angle=0' means no rotation.
+    font.set_text(text, 0.0)
+    
+    # 5. Retrieve dimensions (returns width and height in 1/64th subpixels)
+    w_subpixels, h_subpixels = font.get_width_height()
+    
+    # 6. Convert subpixels back to standard display pixels
+    width_pixels = w_subpixels / 64.0
+    height_pixels = h_subpixels / 64.0
+    
+    return width_pixels, height_pixels
+
+def generate_top_badge_text():
+    mhd = random.randint(1,4)
+
+    text_1 = ""
+
+    text_2 = ""
+
+    if mhd == 1:
+        MHD = random.randint(1,24)
+
+        text_1 = f"Posted {MHD} hours ago"
+
+    elif mhd == 2:
+        MHD = random.randint(1,60)
+
+        text_1 = f"Posted {MHD} minutes ago"
+
+    elif mhd == 3:
+        text_1 = f"Posted yesterday"
+
+    elif mhd == 4:
+        MHD = random.randint(2,30)
+
+        text_1 = f"Posted {MHD} days ago"
+
+
+    prop = random.randint(1,4)
+
+    if prop == 1:
+        text_2 = f"Proposals: Fewer than 5"
+
+    elif prop == 2:
+        text_2 = f"Proposals: 5 to 10"
+
+    elif prop == 3:
+        text_2 = f"Proposals: 20 to 50"
+
+    elif prop == 4:
+        text_2 = f"Proposals: 50+"
+
+    return text_1, text_2
 
 def generate_random_paragraphs(lines=1, width=80):
     # Characters to use for the "words"
