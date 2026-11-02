@@ -106,6 +106,52 @@ def generate_top_badge_text():
 
     return text_1, text_2
 
+def generate_job_specs_text():
+    hf = random.randint(1,3)
+
+    estimated_time = {1 : f"Est. Time: Less than 1 week",
+                      2 : f"Est. Time: 3 to 6 months",
+                      3 : f"Est. Time: Less than 1 month",
+                      4 : f"Est. Time: More than 6 months",
+                      5 : f"Est. Time: 1 to 3 months }
+
+    skill_level = {1 : "Entry level", 2: "Intermediate", 3 : "Expert"}
+
+    hours_per_week = {1 : "Less than 30 hrs/week",
+                      2: "30+ hrs/week"}
+                  
+    if hf == 1:
+        SKILL_LEVEL = skill_level[random.randint(1,3)]
+
+        ESTIMATED_TIME = estimated_time[random.randint(1,5)]
+
+        FIXED_PRICE = random.randint(1,1000) * 5
+
+        text_1 = f"Fixed-price ${FIXED_PRICE}   |   {SKILL_LEVEL}   |   {ESTIMATED_TIME}" 
+
+    if hf == 2:
+        SKILL_LEVEL = skill_level[random.randint(1,3)]
+
+        ESTIMATED_TIME = estimated_time[random.randint(1,5)]
+
+        HOURS_PER_WEEK = hours_per_week[random.randint(1,2)]
+
+        text_1 = f"Hourly   |   {SKILL_LEVEL}   |   {ESTIMATED_TIME}   |   {HOURS_PER_WEEK}" 
+    if hf == 3:
+        SKILL_LEVEL = skill_level[random.randint(1,3)]
+
+        ESTIMATED_TIME = estimated_time[random.randint(1,5)]
+
+        HOURS_PER_WEEK = hours_per_week[random.randint(1,2)]
+
+        RATE_1 = random.randint(1,10) * 5
+
+        RATE_2 = RATE_1 + random.randint(1,10) * 5
+
+        text_1 = f"Hourly: ${RATE_1}-${RATE_2}   |   {SKILL_LEVEL}   |   {ESTIMATED_TIME}   |   {HOURS_PER_WEEK}" 
+
+    return text_1
+
 def generate_random_paragraphs(lines=1, width=80):
     # Characters to use for the "words"
     chars = string.ascii_letters + string.digits
