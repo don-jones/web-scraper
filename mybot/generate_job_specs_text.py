@@ -1,4 +1,4 @@
-from generate_data import generate_job_specs_text
+trom generate_data import generate_job_specs_text
 
 def main():
     for i in range(3):

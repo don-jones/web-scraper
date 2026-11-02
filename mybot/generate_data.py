@@ -127,7 +127,7 @@ def generate_job_specs_text():
 
         FIXED_PRICE = random.randint(1,1000) * 5
 
-        text_1 = f"Fixed-price ${FIXED_PRICE}   |   {SKILL_LEVEL}   |   {ESTIMATED_TIME}" 
+        text_1 = f"Fixed-price: ${FIXED_PRICE}   |   {SKILL_LEVEL}   |   {ESTIMATED_TIME}" 
 
     if hf == 2:
         SKILL_LEVEL = skill_level[random.randint(1,3)]
@@ -148,7 +148,7 @@ def generate_job_specs_text():
 
         RATE_2 = RATE_1 + random.randint(1,10) * 5
 
-        text_1 = f"Hourly: ${RATE_1}-${RATE_2}   |   {SKILL_LEVEL}   |   {ESTIMATED_TIME}   |   {HOURS_PER_WEEK}" 
+        text_1 = f'Hourly: {RATE_1}-{RATE_2}   |   {SKILL_LEVEL}   |   {ESTIMATED_TIME}   |   {HOURS_PER_WEEK}' 
 
     return text_1
 

@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from generate_data import BoundingBox, TextBlock, MetaBadge, SkillChip, JobPane 
-from generate_data import generate_random_paragraphs, generate_top_badge_text
+from generate_data import generate_random_paragraphs, generate_top_badge_text, generate_job_specs_text
 import textwrap
 import random
 
@@ -33,7 +33,7 @@ def generate_upwork_pane_offsets() -> JobPane:
             "width": 50
         },
         "job_specs": {
-            "text": "Fixed-price: $5,000   |   Intermediate   |   Est. Time: Less than 1 month",
+            "text": generate_job_specs_text(), 
             "bounding_box": {"upper": 1.65, "lower": 1.90},
             "fontsize": 12,
             "width": 75
