@@ -148,7 +148,7 @@ def draw_job_card():
         textbox = ax.text(
                   x=current_x, y=y_pos, s=chip["name"], 
                   fontsize=chip['fontsize'], color="#1e293b", weight="bold",
-                  bbox=dict(boxstyle=f"round,pad={padding}", fc="#f1f5f9", ec="black")
+                  bbox=dict(boxstyle=f"round,pad={padding}", fc="#f1f5f9", ec="none")
         )
         fig.canvas.draw()
         renderer = fig.canvas.get_renderer()
@@ -163,7 +163,7 @@ def draw_job_card():
         width_data = bbox_data.x1 - bbox_data.x0
         
         # 4. Safely increment your data coordinate X
-        #current_x += width_data 
+        current_x += width_data 
 
     # 7. Verification Footer Row Data
     footer = pane_data["footer_stats"]
