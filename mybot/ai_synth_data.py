@@ -45,11 +45,8 @@ def generate_upwork_pane_offsets() -> JobPane:
             "width": 75
         },
         "description": {
-            "text": "Seeking an electric engineer to support a project in New York State. "
-                    "The role involves reviewing electrical systems, identifying issues, "
-                    "and recommending solutions. You will collaborate with project teams "
-                    "to ensure designs meet requirements and help maintain project timelines.",
-            "bounding_box": {"upper": 2.65, "lower": 3.75},
+            "text": generate_random_paragraphs(lines=3, width=random.randint(50,100)),
+           "bounding_box": {"upper": 2.65, "lower": 3.75},
             "fontsize": 12,
             "width": 95
         },
