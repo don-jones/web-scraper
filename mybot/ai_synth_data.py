@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import os
 from generate_skillchips import generate_skills_list
 from generate_data import BoundingBox, TextBlock, MetaBadge, SkillChip, JobPane 
 from generate_data import generate_random_paragraphs, generate_top_badge_text, generate_job_specs_text
@@ -170,11 +171,19 @@ def draw_job_card():
         current_x += width_data 
 
     # 7. Verification Footer Row Data
-    footer = pane_data["footer_stats"]
-    ax.text(
-        x=2, y=footer["bounding_box"]["lower"], s=footer["label"], 
-        fontsize=footer["fontsize"], color="#64748b", weight="medium"
-    )
+    dir_path = 'icons'
+    icon_files = os.listdir(dir_path)
+    icon_files = [f for f in icon_files if os.path.isfile(os.path.join(dir_path, f))]
+    
+    img_path = os.path.join(dir_path, random.choice(icon_files)) 
+    img = plt.imread(f"{img_path}")
+    #img = plt.imread(f"icons/-1_pv_40_usa.png")
+    height_px, width_px = 31,746
+    my_dpi = 100
+    scale = 1
+    #fig = plt.figure(figsize=(width_px / my_dpi * scale, height_px / my_dpi * scale), dpi=my_dpi)
+    ax.imshow(img, extent=[1, 90, .03, .17], aspect='auto', zorder=10)
+    
 
     bkgd_img = plt.imread('job_pane_generic.png')
     ax.imshow(bkgd_img, extent=[0, 100, 0, 1], aspect='auto', zorder=-10)
