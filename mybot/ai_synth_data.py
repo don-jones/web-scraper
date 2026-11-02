@@ -1,6 +1,8 @@
 import matplotlib.pyplot as plt
 from generate_data import BoundingBox, TextBlock, MetaBadge, SkillChip, JobPane 
+from generate_data import generate_random_paragraphs
 import textwrap
+import random
 
 from typing import TypedDict, List
 
@@ -21,7 +23,7 @@ def generate_upwork_pane_offsets() -> JobPane:
             "width": 35
         },
         "title": {
-            "text": "Electric Engineer in New York",
+            "text": generate_random_paragraphs(lines=1, width=random.randint(20,50)),
             "bounding_box": {"upper": 1.15, "lower": 1.45},
             "fontsize": 18,
             "width": 50
@@ -115,7 +117,8 @@ def draw_job_card():
     title = pane_data["title"]
     ax.text(
         x=2, y=title["bounding_box"]["lower"], s=title["text"], 
-        fontsize=title["fontsize"], color="#0f172a", weight="bold"
+        fontsize=title["fontsize"], color="#0f172a", weight="bold",
+        wrap=True
     )
     
     # 3. Contextual Job Specifications
@@ -171,5 +174,5 @@ def draw_job_card():
     plt.show()
 
 if __name__ == "__main__":
-    draw_job_card()
-
+    for i in range(3):
+        draw_job_card()
