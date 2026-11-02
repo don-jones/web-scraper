@@ -1,8 +1,8 @@
-from generate_data import generate_job_specs_test
+from generate_data import generate_job_specs_text
 
-def test():
+def main():
     for i in range(3):
-        print(generate_job_specs_test())
+        print(generate_job_specs_text())
 
-if __main__ == '__main__':
-    test()
+if __name__ == '__main__':
+    main()

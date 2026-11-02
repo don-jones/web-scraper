@@ -113,7 +113,7 @@ def generate_job_specs_text():
                       2 : f"Est. Time: 3 to 6 months",
                       3 : f"Est. Time: Less than 1 month",
                       4 : f"Est. Time: More than 6 months",
-                      5 : f"Est. Time: 1 to 3 months }
+                      5 : f"Est. Time: 1 to 3 months" }
 
     skill_level = {1 : "Entry level", 2: "Intermediate", 3 : "Expert"}
 
