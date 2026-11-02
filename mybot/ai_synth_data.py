@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 from generate_skillchips import generate_skills_list
 from generate_data import BoundingBox, TextBlock, MetaBadge, SkillChip, JobPane 
+from generate_data import generate_random_paragraphs, generate_top_badge_text, generate_job_specs_text
 import textwrap
+import random
 
 from typing import TypedDict, List
 
@@ -14,21 +16,25 @@ def generate_upwork_pane_offsets() -> JobPane:
     offset_top = 0.5
     offset_bot = 5.5
 
+    top_badge_text_1, top_badge_text_2 = generate_top_badge_text()
+    ar_flag = False
+
     raw_data: JobPane = {
         "top_badge": {
-            "label": "Posted yesterday • Proposals: 5 to 10",
+            "label": f"{top_badge_text_1} • {top_badge_text_2}",
             "bounding_box": {"upper": 0.72, "lower": 0.95},
             "fontsize": 10,
-            "width": 35
+            "width": 35,
+            "actively_recruiting": ar_flag
         },
         "title": {
-            "text": "Electric Engineer in New York",
+            "text": generate_random_paragraphs(lines=1, width=random.randint(20,50)),
             "bounding_box": {"upper": 1.15, "lower": 1.45},
             "fontsize": 18,
             "width": 50
         },
         "job_specs": {
-            "text": "Fixed-price: $5,000   |   Intermediate   |   Est. Time: Less than 1 month",
+            "text": generate_job_specs_text(), 
             "bounding_box": {"upper": 1.65, "lower": 1.90},
             "fontsize": 12,
             "width": 75
@@ -40,11 +46,8 @@ def generate_upwork_pane_offsets() -> JobPane:
             "width": 75
         },
         "description": {
-            "text": "Seeking an electric engineer to support a project in New York State. "
-                    "The role involves reviewing electrical systems, identifying issues, "
-                    "and recommending solutions. You will collaborate with project teams "
-                    "to ensure designs meet requirements and help maintain project timelines.",
-            "bounding_box": {"upper": 2.65, "lower": 3.75},
+            "text": generate_random_paragraphs(lines=3, width=random.randint(50,100)),
+           "bounding_box": {"upper": 2.65, "lower": 3.75},
             "fontsize": 12,
             "width": 95
         },
@@ -111,7 +114,8 @@ def draw_job_card():
     title = pane_data["title"]
     ax.text(
         x=2, y=title["bounding_box"]["lower"], s=title["text"], 
-        fontsize=title["fontsize"], color="#0f172a", weight="bold"
+        fontsize=title["fontsize"], color="#0f172a", weight="bold",
+        wrap=True
     )
     
     # 3. Contextual Job Specifications
