@@ -103,13 +103,6 @@ def draw_job_card():
     bbox_props = dict(boxstyle="round,pad=0.6", fc="white", ec="#e4e4e7", lw=1.5)
     ax.text(0, 0, "", bbox=bbox_props, transform=ax.transAxes)
 
-    # 1. Top Status Badge
-    top = pane_data["top_badge"]
-    ax.text(
-        x=2, y=top["bounding_box"]["lower"], s=top["label"], 
-        fontsize=top["fontsize"], color="#2563eb", weight="semibold",
-        bbox=dict(boxstyle="round,pad=0.3", fc="#eff6ff", ec="none")
-    )
     
     # 2. Main Job Title Title
     title = pane_data["title"]
@@ -170,6 +163,23 @@ def draw_job_card():
     icon_files = [f for f in icon_files if os.path.isfile(os.path.join(dir_path, f))]
     
     img_path = os.path.join(dir_path, random.choice(icon_files)) 
+
+    if "ar" in img_path:
+        top = pane_data["top_badge"]
+        ax.text(
+            x=2, y=top["bounding_box"]["lower"], s=top["label"], 
+            fontsize=top["fontsize"], color="#2563eb", weight="semibold",
+            bbox=dict(boxstyle="round,pad=0.3", fc="#eff6ff", ec="none")
+        )
+
+    else:
+        top = pane_data["top_badge"]
+        ax.text(
+            x=2, y=top["bounding_box"]["lower"], s=top["label"], 
+            fontsize=top["fontsize"], color="black", weight="semibold",
+            bbox=dict(boxstyle="round,pad=0.3", fc="white", ec="none")
+        )
+
     if "foreign" in img_path:
         loc = pane_data["location_req"]
         ax.text(
