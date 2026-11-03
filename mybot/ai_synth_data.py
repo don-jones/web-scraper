@@ -23,34 +23,34 @@ def generate_upwork_pane_offsets() -> JobPane:
     raw_data: JobPane = {
         "top_badge": {
             "label": f"{top_badge_text_1} • {top_badge_text_2}",
-            "bounding_box": {"upper": 0.72, "lower": 0.5},
-            "fontsize": 10,
+           "bounding_box": {"upper": 1.50, "lower": 1.60},
+            "fontsize": 8,
             "width": 35,
             "actively_recruiting": ar_flag
         },
         "title": {
             "text": generate_random_paragraphs(lines=1, width=random.randint(20,50)),
-            "bounding_box": {"upper": 1.15, "lower": 1.45},
+            "bounding_box": {"upper": 1.80, "lower": 2.10},
             "fontsize": 18,
             "width": 50
         },
         "job_specs": {
             "text": generate_job_specs_text(), 
-            "bounding_box": {"upper": 1.65, "lower": 1.90},
+            "bounding_box": {"upper": 2.30, "lower": 2.50},
             "fontsize": 12,
             "width": 75
         },
         "location_req": {
             "text": "Only freelancers located in the United States may apply.",
-            "bounding_box": {"upper": 2.10, "lower": 2.35},
+            "bounding_box": {"upper": 2.90, "lower": 3.00},
             "fontsize": 12,
             "width": 75
         },
         "description": {
-            "text": generate_random_paragraphs(lines=3, width=random.randint(50,100)),
-           "bounding_box": {"upper": 2.65, "lower": 3.75},
-            "fontsize": 12,
-            "width": 95
+            "text": generate_random_paragraphs(lines=3, width=random.randint(50,80)),
+           "bounding_box": {"upper": 3.10, "lower": 4.00},
+            "fontsize": 9,
+            "width": 100
         },
         "skills_list" : generate_skills_list(),
         "footer_stats": {
@@ -205,6 +205,6 @@ def draw_job_card(NUM_F):
     plt.close()
 
 if __name__ == "__main__":
-    for i in range(30):
+    for i in range(10):
         draw_job_card(i)
 
