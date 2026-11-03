@@ -126,12 +126,6 @@ def draw_job_card():
         fontsize=specs["fontsize"], color="#475569"
     )
     
-    # 4. Mandatory Geo Location Constraint
-    loc = pane_data["location_req"]
-    ax.text(
-        x=2, y=loc["bounding_box"]["lower"], s=f" {loc['text']}", 
-        fontsize=loc["fontsize"], color="#475569", weight="medium"
-    )
     
     # 5. Multiline Core Paragraph Description Block
     desc = pane_data["description"]
@@ -176,6 +170,18 @@ def draw_job_card():
     icon_files = [f for f in icon_files if os.path.isfile(os.path.join(dir_path, f))]
     
     img_path = os.path.join(dir_path, random.choice(icon_files)) 
+    if "foreign" in img_path:
+        loc = pane_data["location_req"]
+        ax.text(
+            x=2, y=loc["bounding_box"]["lower"], s='', 
+            fontsize=loc["fontsize"], color="#475569", weight="medium"
+        )
+    else:
+        loc = pane_data["location_req"]
+        ax.text(
+            x=2, y=loc["bounding_box"]["lower"], s=f" {loc['text']}", 
+            fontsize=loc["fontsize"], color="#475569", weight="medium"
+        )
     img = plt.imread(f"{img_path}")
     #img = plt.imread(f"icons/-1_pv_40_usa.png")
     height_px, width_px = 31,746
