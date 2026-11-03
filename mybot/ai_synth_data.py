@@ -23,7 +23,7 @@ def generate_upwork_pane_offsets() -> JobPane:
     raw_data: JobPane = {
         "top_badge": {
             "label": f"{top_badge_text_1} • {top_badge_text_2}",
-            "bounding_box": {"upper": 0.72, "lower": 0.95},
+            "bounding_box": {"upper": 0.72, "lower": 0.5},
             "fontsize": 10,
             "width": 35,
             "actively_recruiting": ar_flag
@@ -90,7 +90,7 @@ import textwrap
 
 # Ensure the previous definitions (TypedDicts and generate_upwork_pane_offsets) are imported/available
 
-def draw_job_card():
+def draw_job_card(NUM_F):
     pane_data = generate_upwork_pane_offsets()
     
     # Target dimension scale matching an aspect ratio close to the input image card
@@ -133,7 +133,7 @@ def draw_job_card():
     
     # 6. Categorical Horizontal Skill Chips
     current_x = 3
-    for chip in pane_data["skills_list"]:
+    for chip in pane_data["skills_list"][:3]:
         y_pos = chip["bounding_box"]["lower"]
         padding = 0.5
         # Draw background patch label container
@@ -193,21 +193,18 @@ def draw_job_card():
             fontsize=loc["fontsize"], color="#475569", weight="medium"
         )
     img = plt.imread(f"{img_path}")
-    #img = plt.imread(f"icons/-1_pv_40_usa.png")
-    height_px, width_px = 31,746
-    my_dpi = 100
-    scale = 1
-    #fig = plt.figure(figsize=(width_px / my_dpi * scale, height_px / my_dpi * scale), dpi=my_dpi)
-    ax.imshow(img, extent=[1, 90, .03, .17], aspect='auto', zorder=10)
+    ax.imshow(img, extent=[1, 90, .03, .17], zorder=10, aspect='auto')
     
-
     bkgd_img = plt.imread('job_pane_generic.png')
-    ax.imshow(bkgd_img, extent=[0, 100, 0, 1], aspect='auto', zorder=-10)
+    ax.imshow(bkgd_img, extent=[0, 100, 0, 1], zorder=-10, aspect='auto')
 
-    plt.tight_layout()
-    plt.show()
+    #plt.tight_layout()
+    #plt.savefig(f"job_panes/synthesized_data/{NUM_F:08d}",bbox_inches='tight', pad_inches=0)
+    plt.savefig(f"job_panes/synthesized_data/{NUM_F:08d}")
+    #plt.show()
+    plt.close()
 
 if __name__ == "__main__":
-    for i in range(3):
-        draw_job_card()
+    for i in range(30):
+        draw_job_card(i)
 
